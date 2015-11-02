@@ -27,10 +27,15 @@ public class ShipController : MonoBehaviour {
     {
         //FipOver
 
-        if(transform.rotation.z > 1 && transform.position.y < 6)
+        if(transform.rotation.eulerAngles.z > 1)
         {
             Debug.Log("FLIP");
-            transform.Rotate(Vector3.forward, 180);
+
+            Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, 5.0f * Time.deltaTime);
+
+            // transform.rotation = new Quaternion
+            //transform.Rotate(Vector3.forward, 180);
         }
     }
 
@@ -54,7 +59,7 @@ public class ShipController : MonoBehaviour {
         if(Input.GetKey("space"))
         {
             Debug.Log("O)Ut");
-            rb.AddForce(100 * Vector3.up);
+            rb.AddForce(35 * Vector3.up);
         }
     }
 
