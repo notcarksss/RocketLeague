@@ -42,9 +42,11 @@ public class ShipController : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
+       /*
         if (other.gameObject.name == "Ball")
         {
-            other.rigidbody.AddForceAtPosition(50 * mDirection, transform.position, ForceMode.Impulse);
+            other.rigidbody.AddForceAtPosition(100 * mDirection, transform.position, ForceMode.Impulse);
         }
+        */
     }
 }
