@@ -66,21 +66,16 @@ public class ShipController : MonoBehaviour {
 
         if(Input.GetKey("space") && hasRocket)
         {           
-            rb.AddForce(35 * Vector3.up);
+            rb.AddForce(45 * Vector3.up, ForceMode.Impulse);
             hasRocket = false;
         }
     }
 
     void OnCollisionEnter(Collision other)
-    {
-       
-        if (other.gameObject.name == "Ball")
-        {
-            //other.rigidbody.AddForceAtPosition(10 * mDirection, transform.position, ForceMode.Impulse);
-        }
-        else if (other.gameObject.name == "Rocket")
-        {
-            Destroy(other.gameObject);
+    {    
+        
+        if (other.gameObject.tag == "PowerUp")
+        {     
             rocketTimeLeft = rocketTime;
             hasRocket = true;
         }
