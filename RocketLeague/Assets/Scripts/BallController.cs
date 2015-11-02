@@ -9,14 +9,22 @@ public class BallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+
 	}
+
+
 
     void OnCollisionEnter(Collision coll)
     {
         if(coll.gameObject.tag == "Player")
         {
-            rb.velocity += 10* coll.gameObject.GetComponent<Rigidbody>().velocity;
-        }       
+            //rb.velocity += 10* coll.gameObject.GetComponent<Rigidbody>().velocity;
+            Vector3 direction = (transform.position - coll.gameObject.transform.position).normalized;
+
+            rb.AddForce(1500 * direction);
+        }
+        
+          
         rb.velocity = new Vector3(rb.velocity.x, coll.relativeVelocity.y / bouncyness, rb.velocity.z);                
     }
 

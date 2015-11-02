@@ -9,6 +9,11 @@ public class ShipController : MonoBehaviour {
     float mRotationSpeed;
     Vector3 mDirection;
 
+    bool hasRocket = false;
+    float rocketTimeLeft = 0;
+    float rocketTime = 7.0f;
+
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
@@ -21,6 +26,12 @@ public class ShipController : MonoBehaviour {
 	void Update () {
         InputHandling();
         CheckIfScrewedUpAngle();
+        CheckRocketFuelLeft();
+    }
+
+    void CheckRocketFuelLeft()
+    {
+        rocketTime -= Time.deltaTime;
     }
 
     void CheckIfScrewedUpAngle()
@@ -29,13 +40,10 @@ public class ShipController : MonoBehaviour {
 
         if(transform.rotation.eulerAngles.z > 1)
         {
-            Debug.Log("FLIP");
+            //Debug.Log("FLIP");
 
-            Quaternion rot = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, 5.0f * Time.deltaTime);
-
-            // transform.rotation = new Quaternion
-            //transform.Rotate(Vector3.forward, 180);
+            Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5.0f * Time.deltaTime);           
         }
     }
 
@@ -56,10 +64,10 @@ public class ShipController : MonoBehaviour {
 
         mDirection = new Vector3(0, rotation, translation);
 
-        if(Input.GetKey("space"))
-        {
-            Debug.Log("O)Ut");
+        if(Input.GetKey("space") && hasRocket)
+        {           
             rb.AddForce(35 * Vector3.up);
+            hasRocket = false;
         }
     }
 
@@ -68,7 +76,13 @@ public class ShipController : MonoBehaviour {
        
         if (other.gameObject.name == "Ball")
         {
-            other.rigidbody.AddForceAtPosition(10 * mDirection, transform.position, ForceMode.Impulse);
+            //other.rigidbody.AddForceAtPosition(10 * mDirection, transform.position, ForceMode.Impulse);
+        }
+        else if (other.gameObject.name == "Rocket")
+        {
+            Destroy(other.gameObject);
+            rocketTimeLeft = rocketTime;
+            hasRocket = true;
         }
         
     }
