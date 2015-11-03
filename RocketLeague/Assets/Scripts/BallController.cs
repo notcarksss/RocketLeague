@@ -23,8 +23,12 @@ public class BallController : MonoBehaviour {
 
             rb.AddForce(1500 * direction);
         }
-        
-          
+
+        else if (coll.gameObject.tag == "Pillar")
+        {
+            rb.velocity = (-1 * rb.velocity) / bouncyness;
+        }      
+
         rb.velocity = new Vector3(rb.velocity.x, coll.relativeVelocity.y / bouncyness, rb.velocity.z);                
     }
 

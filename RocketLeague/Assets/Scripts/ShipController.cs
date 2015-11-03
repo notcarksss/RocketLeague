@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ShipController : MonoBehaviour {
@@ -11,7 +12,7 @@ public class ShipController : MonoBehaviour {
 
     bool hasRocket = false;
     float rocketTimeLeft = 0;
-    float rocketTime = 7.0f;
+    float rocketTime = 7.0f;    
 
 
 	// Use this for initialization
@@ -27,11 +28,23 @@ public class ShipController : MonoBehaviour {
         InputHandling();
         CheckIfScrewedUpAngle();
         CheckRocketFuelLeft();
+
+        GameObject.Find("PowerUpInd").GetComponent<Text>().text = "Rocket Fuel Time: " + (Mathf.Round(rocketTimeLeft * 100) / 100).ToString();
+
     }
 
     void CheckRocketFuelLeft()
     {
-        rocketTime -= Time.deltaTime;
+        if(rocketTimeLeft > 0)
+        {
+            rocketTimeLeft -= Time.deltaTime;
+        }
+        else
+        {
+            rocketTimeLeft = 0;
+            hasRocket = false;
+        }
+        
     }
 
     void CheckIfScrewedUpAngle()
@@ -68,6 +81,7 @@ public class ShipController : MonoBehaviour {
         {           
             rb.AddForce(45 * Vector3.up, ForceMode.Impulse);
             hasRocket = false;
+            rocketTimeLeft = 0;
         }
     }
 
