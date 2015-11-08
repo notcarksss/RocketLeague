@@ -19,7 +19,7 @@ public class ShipController : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody>();
 
-        mSpeed = 45;
+        mSpeed = 35;
         mRotationSpeed = 75;
 	}
 	
