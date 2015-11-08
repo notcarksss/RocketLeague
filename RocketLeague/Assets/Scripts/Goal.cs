@@ -12,6 +12,8 @@ public class Goal : MonoBehaviour {
     GameObject ball;
     int nbGoals;
 
+    [SerializeField]
+    public GameObject GoalText;
 
     float globalTImer;   
 
@@ -25,7 +27,7 @@ public class Goal : MonoBehaviour {
         globalTImer = 60.0f;
         nbGoals = 0;
 
-        GameObject.Find("GOAL").GetComponent<Text>().text = "";
+        //GameObject.Find("GOAL").GetComponent<Text>().text = "";
     }
 	
 	// Update is called once per frame
@@ -34,7 +36,7 @@ public class Goal : MonoBehaviour {
         {
             if (goalCoolDown > 0)
             {
-                GameObject.Find("GOAL").GetComponent<Text>().text = "GOAL";
+                GoalText.GetComponent<Text>().text = "GOAL";
                 goalCoolDown -= Time.deltaTime;
             }
             else
@@ -62,7 +64,7 @@ public class Goal : MonoBehaviour {
         gameObject.layer = 9;
         ball.transform.position = ballRestPos;
         goalHit = false;
-        GameObject.Find("GOAL").GetComponent<Text>().text = "";
+        GoalText.GetComponent<Text>().text = "";
     }
 
     void OnCollisionEnter(Collision other)
